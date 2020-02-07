@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>网页秒表</title>
+		<style>
+			#div1{
+				width: 300px;
+				height: 400px;
+				background-color: gray;
+				margin: 100px auto;//<css>p272
+				/* padding: 75px 0px; */
+				text-align: center;
+			}
+			#count{
+				width: 300px;
+				height: 150px;
+				line-height: 150px;//不理解
+				margin-right: 25px;
+				font-size: 40px;
+				text-align: center;
+			}
+			#div1 input {
+				width: 150px;
+				height: 40px;
+				background-color:greenyellow;
+				font-size: 20px;
+				margin-top: 20px;
+				margin-left: 75px;
+			}
+		</style>
+		<script>
+			function $(id){
+				return document.getElementById(id);
+			}
+			window.onload = function(){
+				var count = 0;
+				//开始
+				$("start").onclick = function(){
+					timer = setInterval(function(){
+						count++;
+						$("id_MS").innerHTML = count % 10;
+						$("id_S").innerHTML = showNumber(parseInt(count / 10) % 60);
+						$("id_M").innerHTML = showNumber(parseInt( count / 600));
+					},100)//用1ms测试时发现累计的延迟误差很大，
+				}
+				//暂停
+				$("pause").onclick = function(){
+					clearInterval(timer);
+				}
+				//停止，数据清零，页面展示
+				$("stop").onclick = function(){
+					clearInterval(timer);
+					count = 0;
+					$("id_MS").innerHTML = "0";
+					$("id_S").innerHTML = "00";
+					$("id_M").innerHTML = "00";
+					//暂停
+				}
+			}
+			//处理单个数字
+			function showNumber(num){//必须用函数声明，不然在前面使用无效
+				if(num < 10){
+					return "0"+num;
+				}else{
+					return num;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="div1">
+			<div id="count">
+				<span id="id_M">00</span>:
+				<span id="id_S">00</span>.
+				<span id="id_MS">00</span>
+			</div>
+			<input id= "start" type= "button" value= "开始"></span>
+			<input id= "pause" type= "button" value= "暂停"></span>
+			<input id= "stop"  type= "button" value= "停止"></span>
+		</div>
+	</body>
+</html>

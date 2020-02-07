@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>移动元素</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		div{
+			width: 100px;
+			height: 100px;
+			background-color: greenyellow;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		body{
+			overflow: hidden;
+		}
+		h1,h4{
+			text-align: center;
+			line-height: 100px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h1>看我</h1>
+	</div>
+	<script type="text/javascript">
+		var speedx = 3;
+		var speedy = 20;
+		var div =document.querySelector("div");
+		function move(){
+			var currentLeft = parseInt(window.getComputedStyle(div).left);
+			var currentTop =  parseInt(window.getComputedStyle(div).top);
+			check_border(div);
+			var left = currentLeft + speedx;
+			var top = currentTop + speedy;
+			div.style.left = left +'px';
+			div.style.top = top + 'px';
+		}
+		function check_border(el){
+			var st1 = window.getComputedStyle(el);
+			var left = parseInt(st1.left);
+			var top = parseInt(st1.top);
+			var h = parseInt(st1.height);
+			var w = parseInt(st1.width);
+			if ( left < 0){
+				left = 0;
+				speedx *= -1;
+			}
+			if (left > window.innerWidth - w){
+				left = window.innerWidth - w;
+				speedx *= -1;
+			}
+			if ( top < 0){
+				top = 0;
+				speedy *= -1;
+			}
+			if (top > window.innerHeight - h){
+				top = window.innerHeight - h;
+				speedy *= -1;
+			}
+			div.style.top = top + 'px';
+			div.style.left = left + 'px';
+		}
+		setInterval(function(){
+			move();
+		},10);
+		//成功！！
+	</script>
+</body>
+</html>
